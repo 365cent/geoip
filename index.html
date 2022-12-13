@@ -1,11 +1,12 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>GeoIP Lookup</title>
-	<meta name="description" content="GeoIP Lookup - This tool provides IPv4 / IPv6 GeoIP Lookup and API services.">
-	<style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoIP Lookup</title>
+<meta name="description" content="GeoIP Lookup - This tool provides IPv4 / IPv6 GeoIP Lookup and API services.">
+<style>
 		* {
 			font-weight: 400;
 			text-align: center;
@@ -63,28 +64,24 @@
 		}
 	</style>
 </head>
-
 <body>
-	<main>
-		<h1>GeoIP Lookup</h1>
-		<input type="search" name="ip" placeholder="IPv4 / IPv6 / Domain" />
-		<button type="submit" title="Search">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-				stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-				class="feather feather-search">
-				<circle cx="11" cy="11" r="8"></circle>
-				<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-			</svg>
-		</button>
-		<p><code>curl https://ip.yyz.design/ip</code></p>
-		<p class="output"></p>
-	</main>
-	<script>
+<main>
+<h1>GeoIP Lookup</h1>
+<input type="search" name="ip" placeholder="IPv4 / IPv6 / Domain" />
+<button type="submit" title="Search">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+</button>
+<p><code>curl https://geoip.mxtrans.net/json</code></p>
+<p class="output"></p>
+</main>
+<script>
 		window.addEventListener("DOMContentLoaded", () => {
 			let output = document.querySelector('.output');
 			let urlParams = new URLSearchParams(window.location.search);
 			let ip = urlParams.get('ip') || '';
-			let wrap = "<br/>";
 			if (ip != '') { geoip() };
 			document.querySelector('input').focus();
 			document.querySelector('button').addEventListener('click', geoip);
@@ -97,18 +94,18 @@
 					try {
 						ip = (new URL(ip)).hostname;
 					} catch (TypeError) {
-						document.write("Invalid URL");
+						output.innerHTML = "Invalid URL";
 						throw new Error(TypeError);
 					}
 				}
-				fetch('https://ipwhois.app/json/' + ip)
+				fetch('json/' + ip)
 					.then(response => response.json())
 					.then(data => {
-						output.innerHTML = data.ip + wrap + data.country + wrap + data.region + wrap + data.city + wrap + data.isp;
+            let info = [data.ip, data.country, data.region, data.city, data.isp];
+            output.innerHTML = Array.from(info).join("<br/>");
 					})
 			}
 		});
 	</script>
 </body>
-
 </html>
