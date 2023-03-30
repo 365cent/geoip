@@ -81,7 +81,7 @@
 	</main>
 	<script>
 		window.addEventListener("DOMContentLoaded", () => {
-			let output = document.querySelector('.output');
+			let output = document.querySelector('p');
 			let urlParams = new URLSearchParams(window.location.search);
 			let ip = urlParams.get('ip') || '';
 			if (ip != '') { geoip() };
